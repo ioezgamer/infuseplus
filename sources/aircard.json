@@ -1,0 +1,63 @@
+{
+  "name": "AirCard-iOS",
+  "identifier": "com.ioezgamer.aircard.source",
+  "subtitle": "Fuente no oficial con los releases oficiales de AirCard-iOS",
+  "description": "Fuente compatible con FlareStore, SideStore y AltStore Classic. Los IPA apuntan directamente a los releases oficiales de Mak5er/AirCard-iOS en GitHub.",
+  "iconURL": "https://raw.githubusercontent.com/Mak5er/AirCard-iOS/main/ios-app/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+  "website": "https://github.com/Mak5er/AirCard-iOS",
+  "tintColor": "#007AFF",
+  "featuredApps": [
+    "com.mak5er.aircard"
+  ],
+  "apps": [
+    {
+      "name": "AirCard-iOS",
+      "bundleIdentifier": "com.mak5er.aircard",
+      "developerName": "Mak5er",
+      "subtitle": "Personalización de Wallet, temas de código y fondos PosterBoard.",
+      "localizedDescription": "Builds oficiales de AirCard-iOS publicados por Mak5er. Esta fuente solo organiza y enlaza los IPA originales de GitHub Releases.",
+      "iconURL": "https://raw.githubusercontent.com/Mak5er/AirCard-iOS/main/ios-app/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+      "tintColor": "#007AFF",
+      "category": "utilities",
+      "versions": [
+        {
+          "version": "1.3.2",
+          "buildVersion": "1.3.2",
+          "date": "2026-10-04T12:22:53Z",
+          "localizedDescription": "AirCard-iOS v1.3.2. Mejoras de detección de tarjetas, identificación de banco/red, rutas de túnel más rápidas y correcciones de fondos.",
+          "downloadURL": "https://github.com/Mak5er/AirCard-iOS/releases/download/v1.3.2/AirCard-iOS.ipa",
+          "size": 4638147,
+          "minOSVersion": "18.0"
+        },
+        {
+          "version": "1.3.1",
+          "buildVersion": "1.3.1",
+          "date": "2026-10-01T23:01:18Z",
+          "localizedDescription": "AirCard-iOS v1.3.1. Añade importación de archivos de pairing y soporte para emparejamiento en iOS 18–26.",
+          "downloadURL": "https://github.com/Mak5er/AirCard-iOS/releases/download/v1.3.1/AirCard-iOS.ipa",
+          "size": 4597510,
+          "minOSVersion": "18.0"
+        },
+        {
+          "version": "1.3",
+          "buildVersion": "1.3",
+          "date": "2026-09-20T02:08:32Z",
+          "localizedDescription": "AirCard-iOS v1.3. Añade soporte de fondos .tendies y mejoras de Wallet y temas de código.",
+          "downloadURL": "https://github.com/Mak5er/AirCard-iOS/releases/download/v1.3/AirCard-iOS.ipa",
+          "size": 4452235,
+          "minOSVersion": "18.0"
+        },
+        {
+          "version": "1.2.5",
+          "buildVersion": "1.2.5",
+          "date": "2026-09-19T22:19:08Z",
+          "localizedDescription": "AirCard-iOS v1.2.5. Correcciones de estabilidad, memoria, túnel y compatibilidad de Wallet.",
+          "downloadURL": "https://github.com/Mak5er/AirCard-iOS/releases/download/v1.2.5/AirCard-iOS.ipa",
+          "size": 4180858,
+          "minOSVersion": "18.0"
+        }
+      ]
+    }
+  ],
+  "news": []
+}
