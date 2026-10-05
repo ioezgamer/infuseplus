@@ -1,0 +1,102 @@
+name: Update AirCard FlareStore source
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate source from official releases
+        shell: bash
+        run: |
+          python3 <<'PY'
+          import json
+          import pathlib
+          import urllib.request
+
+          api = "https://api.github.com/repos/Mak5er/AirCard-iOS/releases?per_page=100"
+          req = urllib.request.Request(
+              api,
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "User-Agent": "AirCard-FlareStore-Source",
+              },
+          )
+          with urllib.request.urlopen(req) as response:
+              releases = json.load(response)
+
+          versions = []
+          for release in releases:
+              if release.get("draft") or release.get("prerelease"):
+                  continue
+              asset = next(
+                  (a for a in release.get("assets", []) if a.get("name", "").lower().endswith(".ipa")),
+                  None,
+              )
+              if not asset:
+                  continue
+              tag = release.get("tag_name", "")
+              version = tag[1:] if tag.startswith("v") else tag
+              versions.append({
+                  "version": version,
+                  "buildVersion": version,
+                  "date": release.get("published_at") or release.get("created_at"),
+                  "localizedDescription": f"Release oficial {tag} de AirCard-iOS publicado por Mak5er.",
+                  "downloadURL": asset["browser_download_url"],
+                  "size": asset["size"],
+                  "minOSVersion": "18.0",
+              })
+
+          if not versions:
+              raise SystemExit("No IPA releases found")
+
+          icon = "https://raw.githubusercontent.com/Mak5er/AirCard-iOS/main/ios-app/Assets.xcassets/AppIcon.appiconset/AppIcon.png"
+          source = {
+              "name": "AirCard-iOS",
+              "identifier": "com.ioezgamer.aircard.source",
+              "subtitle": "Fuente no oficial con los releases oficiales de AirCard-iOS",
+              "description": "Fuente compatible con FlareStore, SideStore y AltStore Classic. Los IPA apuntan directamente a los releases oficiales de Mak5er/AirCard-iOS en GitHub.",
+              "iconURL": icon,
+              "website": "https://github.com/Mak5er/AirCard-iOS",
+              "tintColor": "#007AFF",
+              "featuredApps": ["com.mak5er.aircard"],
+              "apps": [{
+                  "name": "AirCard-iOS",
+                  "bundleIdentifier": "com.mak5er.aircard",
+                  "developerName": "Mak5er",
+                  "subtitle": "Personalización de Wallet, temas de código y fondos PosterBoard.",
+                  "localizedDescription": "Builds oficiales de AirCard-iOS publicados por Mak5er. Esta fuente solo organiza y enlaza los IPA originales de GitHub Releases.",
+                  "iconURL": icon,
+                  "tintColor": "#007AFF",
+                  "category": "utilities",
+                  "versions": versions,
+              }],
+              "news": [],
+          }
+
+          path = pathlib.Path("sources/aircard.json")
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(source, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          PY
+
+      - name: Commit source updates
+        shell: bash
+        run: |
+          if git diff --quiet -- sources/aircard.json; then
+            echo "AirCard source is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sources/aircard.json
+          git commit -m "Update AirCard-iOS FlareStore source"
+          git push
